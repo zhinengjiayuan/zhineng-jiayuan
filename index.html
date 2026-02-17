@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>智能家园</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family: 'Microsoft Yahei', sans-serif; }
+
+  /* ========== 主页 ========== */
+  #home {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(to right, #ffecd2 0%, #fcb69f 100%);
+  }
+  .card {
+    background: #fff;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    text-align: center;
+    max-width: 400px;
+    width: 90%;
+  }
+  .card h1 {
+    font-size: 24px;
+    color: #222;
+    margin-bottom: 20px;
+  }
+  .line {
+    font-size: 16px;
+    color: #555;
+    line-height: 1.8;
+    margin: 8px 0;
+  }
+  .btn {
+    background: #ff6b6b;
+    color: white;
+    border: none;
+    padding: 15px 35px;
+    border-radius: 12px;
+    font-size: 17px;
+    margin-top: 25px;
+    cursor: pointer;
+  }
+
+  /* ========== 加载页 ========== */
+  #loading {
+    display: none;
+    min-height: 100vh;
+    background: #F4F7FA;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #888;
+  }
+  .globe {
+    width: 70px;
+    height: 70px;
+    background: #92C9FF;
+    border-radius: 50%;
+    margin-bottom: 20px;
+  }
+
+  /* ========== 社区 ========== */
+  #community {
+    display: none;
+    min-height: 100vh;
+    background: #FDF6F0;
+    position: relative;
+  }
+  .welcome-text {
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 18px;
+    color: #886655;
+  }
+  .ai-avatar {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    background: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    cursor: pointer;
+  }
+
+  /* ========== 聊天页 ========== */
+  #chat {
+    display: none;
+    background: #FDF6F0;
+    color: #333;
+    padding: 10px;
+    min-height: 100vh;
+    padding-bottom: 70px;
+  }
+  .back-btn {
+    background: none;
+    border: none;
+    font-size: 16px;
+    color: #886655;
+    margin-bottom: 10px;
+  }
+  .header {
+    text-align: center;
+    padding: 10px 0 20px;
+    font-size: 18px;
+    color: #886655;
+  }
+  .chat-box {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .msg {
+    max-width: 70%;
+    padding: 12px 16px;
+    border-radius: 16px;
+    line-height: 1.5;
+  }
+  .msg-other {
+    background: #fff;
+    align-self: flex-start;
+  }
+  .msg-self {
+    background: #F6C9BC;
+    align-self: flex-end;
+  }
+  .input-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #fff;
+    display: flex;
+    padding: 10px;
+    gap: 8px;
+  }
+  #msgInput {
+    flex: 1;
+    background: #F6F0EB;
+    border: none;
+    border-radius: 20px;
+    padding: 10px 14px;
+    outline: none;
+  }
+  #sendBtn {
+    background: #F6C9BC;
+    color: #333;
+    border: none;
+    border-radius: 20px;
+    padding: 0 16px;
+    cursor: pointer;
+  }
+</style>
+</head>
+<body>
+
+<!-- 主页 -->
+<div id="home">
+  <div class="card">
+    <h1>🏠 智能家园</h1>
+    <div class="line">✨ 自然相遇，随心而聊</div>
+    <div class="line">🤖 AI见证陪伴，共建专属小家</div>
+    <div class="line">💓 心意相通，遇见同频伙伴</div>
+    <button class="btn" onclick="goLoad()">进入家园</button>
+  </div>
+</div>
+
+<!-- 加载 -->
+<div id="loading">
+  <div class="globe"></div>
+  <div>正在进入智能家园...</div>
+</div>
+
+<!-- 社区 -->
+<div id="community">
+  <div class="welcome-text">欢迎来到智能家园</div>
+  <div class="ai-avatar" onclick="openChat()">💛</div>
+</div>
+
+<!-- 聊天 -->
+<div id="chat">
+  <button class="back-btn" onclick="backToCommunity()">← 返回</button>
+  <div class="header">和小暖聊天</div>
+  <div class="chat-box" id="chatBox"></div>
+
+  <div class="input-bar">
+    <input id="msgInput" placeholder="输入消息..." type="text">
+    <button id="sendBtn" onclick="sendMsg()">发送</button>
+  </div>
+</div>
+
+<script>
+// 主页 → 加载 → 社区
+function goLoad() {
+  document.getElementById('home').style.display = 'none';
+  document.getElementById('loading').style.display = 'flex';
+  setTimeout(goCommunity, 1800);
+}
+
+function goCommunity() {
+  document.getElementById('loading').style.display = 'none';
+  document.getElementById('community').style.display = 'block';
+  document.getElementById('chat').style.display = 'none';
+}
+
+// 打开聊天
+function openChat() {
+  document.getElementById('community').style.display = 'none';
+  document.getElementById('chat').style.display = 'block';
+}
+
+// 返回社区
+function backToCommunity() {
+  goCommunity();
+}
+
+// 发送消息
+function sendMsg() {
+  let input = document.getElementById('msgInput');
+  let chatBox = document.getElementById('chatBox');
+  let val = input.value.trim();
+  if (!val) return;
+
+  let div = document.createElement('div');
+  div.className = 'msg msg-self';
+  div.innerText = val;
+  chatBox.appendChild(div);
+
+  input.value = '';
+  chatBox.scrollTop = chatBox.scrollHeight;
+}
+</script>
+</body>
+</html>
+
