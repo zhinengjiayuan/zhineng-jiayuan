@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登录</title>
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box;font-family:Microsoft YaHei,sans-serif}
+        body{background:linear-gradient(135deg,#f093fb 0%,#f5576c 100%);min-height:100vh;display:flex;justify-content:center;align-items:center;padding:20px}
+        .login-card{background:#fff;width:100%;max-width:420px;border-radius:24px;padding:40px 32px;box-shadow:0 20px 60px rgba(0,0,0,.15)}
+        .logo{text-align:center;margin-bottom:32px}
+        .logo .icon{font-size:60px;color:#f5576c}
+        .logo h1{font-size:32px;color:#333;margin-top:8px}
+        .input-group{margin-bottom:20px}
+        .input-group label{display:block;font-size:14px;color:#666;margin-bottom:8px}
+        .input-group input{width:100%;padding:16px;border:1px solid #eee;border-radius:12px;font-size:16px;background:#f9f9f9}
+        .btn-login{width:100%;padding:16px;background:linear-gradient(135deg,#f093fb 0%,#f5576c 100%);color:#fff;border:none;border-radius:12px;font-size:18px;font-weight:600;margin-top:12px;cursor:pointer}
+        .switch-text{text-align:center;margin-top:24px;color:#666;font-size:14px}
+        .switch-text a{color:#f5576c;text-decoration:none;cursor:pointer}
+        #register-form{display:none}
+    </style>
+</head>
+<body>
+<div class="login-card">
+    <div class="logo">
+        <div class="icon">🏠</div>
+        <h1 id="form-title">智能家园</h1>
+    </div>
+
+    <div id="login-form">
+        <div class="input-group">
+            <label>账号</label>
+            <input id="loginName" type="text" placeholder="请输入账号" value="123456">
+        </div>
+        <div class="input-group">
+            <label>密码</label>
+            <input type="password" placeholder="请输入密码" value="123456">
+        </div>
+        <button class="btn-login" onclick="login()">登录</button>
+        <div class="switch-text">
+            还没有账号？<a onclick="switchForm('register')">立即注册</a>
+        </div>
+    </div>
+
+    <div id="register-form">
+        <div class="input-group">
+            <label>账号</label>
+            <input id="regName" type="text" placeholder="请输入账号">
+        </div>
+        <div class="input-group">
+            <label>密码</label>
+            <input type="password" placeholder="请输入密码">
+        </div>
+        <div class="input-group">
+            <label>确认密码</label>
+            <input type="password" placeholder="确认密码">
+        </div>
+        <button class="btn-login" onclick="register()">注册</button>
+        <div class="switch-text">
+            已有账号？<a onclick="switchForm('login')">立即登录</a>
+        </div>
+    </div>
+</div>
+
+<script>
+function switchForm(type){
+    if(type==='register'){
+        document.getElementById('login-form').style.display='none'
+        document.getElementById('register-form').style.display='block'
+        document.getElementById('form-title').textContent='注册账号'
+    }else{
+        document.getElementById('register-form').style.display='none'
+        document.getElementById('login-form').style.display='block'
+        document.getElementById('form-title').textContent='智能家园'
+    }
+}
+async function login(){
+    const name=document.getElementById('loginName').value
+    if(!name)return alert('请输入账号')
+    localStorage.setItem('user',name)
+    location.href='/home'
+}
+function register(){
+    alert('注册成功，请登录')
+    switchForm('login')
+}
+</script>
+</body>
+</html>
+
