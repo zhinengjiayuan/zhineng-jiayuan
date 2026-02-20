@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>智能家园</title>
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box;font-family:Microsoft YaHei,sans-serif}
+        body{background:#f8f9fa;padding-bottom:70px}
+        .header{background:linear-gradient(135deg,#f093fb,#f5576c);color:#fff;padding:24px 20px;text-align:center;font-size:24px;border-bottom-left-radius:24px;border-bottom-right-radius:24px}
+        .container{padding:32px 20px;display:grid;grid-template-columns:1fr 1fr;gap:20px}
+        .nav-card{background:#fff;padding:28px 20px;border-radius:16px;text-align:center;box-shadow:0 4px 12px rgba(0,0,0,.06);cursor:pointer}
+        .nav-card .icon{font-size:40px;margin-bottom:12px}
+        .nav-card .title{font-size:16px;color:#333}
+        .footer-nav{position:fixed;bottom:0;left:0;right:0;height:70px;background:#fff;display:flex;align-items:center;justify-content:space-around;box-shadow:0 -2px 10px rgba(0,0,0,.1)}
+        .nav-item{display:flex;flex-direction:column;align-items:center;color:#666;font-size:12px}
+        .nav-item.active{color:#f5576c}
+        .nav-item .icon{font-size:24px}
+    </style>
+</head>
+<body>
+<div class="header">🏠 智能家园</div>
+<div class="container">
+    <div class="nav-card" onclick="location.href='/hall'">
+        <div class="icon">💬</div>
+        <div class="title">聊天</div>
+    </div>
+    <div class="nav-card" onclick="location.href='/community'">
+        <div class="icon">🌏</div>
+        <div class="title">社区</div>
+    </div>
+</div>
+<div class="footer-nav">
+    <div class="nav-item active" onclick="location.href='/home'">
+        <div class="icon">🏠</div>
+        <div class="text">首页</div>
+    </div>
+    <div class="nav-item" onclick="location.href='/hall'">
+        <div class="icon">💬</div>
+        <div class="text">聊天</div>
+    </div>
+    <div class="nav-item" onclick="location.href='/community'">
+        <div class="icon">🏘️</div>
+        <div class="text">社区</div>
+    </div>
+    <div class="nav-item" onclick="alert('我的')">
+        <div class="icon">👤</div>
+        <div class="text">我的</div>
+    </div>
+</div>
+</body>
+</html>
+
